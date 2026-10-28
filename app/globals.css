@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-ink: #0a0a0a;
+  --color-bone: #f2f2f0;
+  --color-signal: #e10600;
+  --color-hud: #d4ff00;
+
+  --font-display: var(--font-anton), Impact, 'Arial Narrow', sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-grotesk), system-ui, sans-serif;
+
+  --ease-brutal: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  --gutter: clamp(12px, 3vw, 40px);
+  --hud-h: 56px;
+  --bar-h: 28px;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-signal);
+  color: var(--color-ink);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@utility text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-bone);
+}
+
+@utility text-stroke-signal {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-signal);
+}
+
+@utility hazard {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-signal) 0 10px,
+    var(--color-ink) 10px 20px
+  );
+}
+
+@utility hazard-bone {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-bone) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.hero-title {
+  font-size: clamp(4rem, min(18vw, 25svh), 22rem);
+  line-height: 0.84;
+}
+
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.6s steps(3) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  33% { transform: translate(-3%, 2%); }
+  66% { transform: translate(2%, -3%); }
+  100% { transform: translate(0, 0); }
+}
+
+.step-arrow {
+  animation: step-arrow 1.2s steps(4, jump-none) infinite;
+}
+
+@keyframes step-arrow {
+  0% { transform: translateY(-30%); }
+  100% { transform: translateY(30%); }
+}
+
+.marquee {
+  animation: marquee 26s linear infinite;
+}
+.marquee-reverse {
+  animation: marquee 26s linear infinite reverse;
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain,
+  .step-arrow,
+  .marquee,
+  .marquee-reverse {
+    animation: none;
+  }
+}
